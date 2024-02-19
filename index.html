@@ -3,39 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mirror Room</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>Mirror room</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-image: url('./img/wall.jpeg');
+            background-repeat: repeat;
+            overflow: hidden;
+        }
+        .floor {
+            position: absolute;
+            width: 300vw;
+            height: 500px;
+            left: calc(50% - 150vw);
+            bottom: 0;
+            background-image: url('./img/floor.jpeg');
+            background-repeat: repeat;
+            transform: perspective(100px) rotateX(15deg) translateZ(10px);
+            transform-origin: center bottom;
+            z-index: 0;
+        }
+        .button {
+            position: absolute;
+            bottom: 250px;
+            right: 9%;
+            z-index: -1;
+            border: 0px;
+            background-color: transparent;
+        }
+        .mirror {
+            position: absolute;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: scaleX(-1);
+            box-shadow: -50px 50px 80px rgba(0, 0, 0, 5);
+        }
+        .frame {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: scaleX(-1);
+            pointer-events: none;
+        }
+        .mirror1 {
+            width: 200px;
+            height: 250px;
+            border-radius: 50%;
+            left: 40%;
+            top: 10%;
+        }
+        .frame1 {
+            width: 280px;
+            border-radius: 50%;
+            left: calc(40% - 40px);
+            top: calc(10% - 100px);
+        }
+        .mirror2 {
+            position: absolute;
+            overflow: hidden;
+            width: 200px;
+            height: 360px;
+            top: 30%;
+            left: 20%;
+        }
+        .frame2 {
+            width: 300px;
+            height: 430px;
+            top: calc(30% - 40px);
+            left: calc(20% - 50px);
+        }
+        .mirror3 {
+            width: 150px;
+            height: 480px;
+            transform: scaleX(-1) skew(5deg);
+            left: 70%;
+            top: 30%;
+        }
+        .frame3 {
+            width: 220px;
+            transform: scaleX(-1) skew(5deg);
+            left: calc(70% - 40px);
+            top: calc(30% - 40px);
+        }
+        video {
+            filter: blur(1px) contrast(120%);
+        }
+        .mirror:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(255,255,255,0.4);
+            -webkit-transition: none;
+                -moz-transition: none;
+                    transition: none;
+        }
+        .mirror:hover:after {
+            width: 120%;
+            background-color: rgba(255,255,255,0);
+            
+            -webkit-transition: all 0.4s ease-in-out;
+                -moz-transition: all 0.4s ease-in-out;
+                    transition: all 0.4s ease-in-out;
+        }
+
+        .light {
+            position: absolute;
+            width: 150px;
+        }
+        .light1 {
+            left: 20%;
+        }
+        .light2 {
+            left: 55%;
+        }
+        .light3 {
+            left: 80%;
+        }
+        .light:hover {
+            animation: ding 2s ease-in-out forwards;
+        }
+        @keyframes ding {
+            0% {
+                top: 0;
+            }
+
+            20% {
+                top: 50px;
+            }
+
+            100% {
+                top: 0;
+            }
+        }
+
+        .reveal {
+            display: none;
+        }
+        .dark {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgb(12, 16, 90);
+            opacity: 80%;
+            mix-blend-mode: color-burn;
+            pointer-events: none;
+        }
+        .reveal a {
+            color: rgb(181, 212, 240);
+            position: absolute;
+            font-size: 100px;
+            height: 80px;
+            width: 80px;
+            mix-blend-mode: color-dodge;
+            font-family: cursive;
+            text-align: center;
+            left: 40%;
+            top: 50%;
+            transform: rotate(-30deg);
+        }
+    </style>
 </head>
 <body>
     <div class="floor"></div>
 
-    <a href="./outdex.html" class="out">
+    <button class="button" value="on" onclick="onOff()">
         <img src="./img/switch.png" alt="">
-    </a>
-    
+    </button>
 
-    <div class=" circle circle1">
+    <div class="mirror mirror1">
         <video id="webcam1" width="640" height="480" autoplay></video>
     </div>
-    <img src="./img/mirror1.png" alt="" class="mirror mirror1">
+    <img src="./img/mirror1.png" alt="" class="frame frame1">
 
     
-    <div class="circle circle2">
+    <div class="mirror mirror2">
         <video id="webcam2" width="640" height="480" autoplay></video>
     </div>
-    <img src="./img/mirror2.png" alt="" class="mirror mirror2">
+    <img src="./img/mirror2.png" alt="" class="frame frame2">
    
-    <div class="circle circle3">
+    <div class="mirror mirror3">
         <video id="webcam3" width="640" height="480" autoplay></video>
     </div>
-    <img src="./img/mirror3.png" alt="" class="mirror mirror3">
+    <img src="./img/mirror3.png" alt="" class="frame frame3">
 
 
     <img src="./img/light1.png" alt="" class="light light1">
     <img src="./img/light2.png" alt="" class="light light2">
     <img src="./img/light3.png" alt="" class="light light3">
 
+    
+    <div class="reveal">
+        <div class="dark"></div>
+        <a href="./next.html">./next.html</a>
+    </div>
 
-    <script src="./script.js"> </script>
+
+    <script>
+        const reveal = document.querySelector('.reveal');
+        const button = document.querySelector('.button');
+
+        function onOff() {
+            console.log('clicked');
+            if (button.value === 'on') {
+                reveal.style.display = 'block';
+                button.value = 'off';
+            }
+            else {
+                reveal.style.display = 'none';
+                button.value = 'on';
+            }
+        }
+        
+
+
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                width: { exact: 1 },
+                height: { exact: 1 }
+            }
+        })
+        .then(function (stream) {
+            // Set stream for the first video element
+            document.getElementById('webcam1').srcObject = stream.clone();
+
+            // Set stream for the second video element
+            document.getElementById('webcam2').srcObject = stream.clone();
+
+            // Set stream for the third video element
+            document.getElementById('webcam3').srcObject = stream.clone();
+        })
+
+        .catch(function (error) {
+            console.error('Error accessing webcam:', error);
+        });
+
+    </script>
 </body>
 </html>
