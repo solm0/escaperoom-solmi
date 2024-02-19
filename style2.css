@@ -4,7 +4,7 @@
 }
 
 body {
-    background-image: url('./wall.jpeg'); /* 이미지 경로를 실제 이미지 파일의 경로로 변경해주세요 */
+    background-image: url('./img/wall.jpeg'); /* 이미지 경로를 실제 이미지 파일의 경로로 변경해주세요 */
       background-repeat: repeat;
       overflow: hidden;
 }
@@ -15,7 +15,7 @@ body {
     height: 500px;
     left: calc(50% - 150vw);
     bottom: 0;
-    background-image: url('./floor.jpeg'); /* 이미지 경로를 실제 이미지 파일의 경로로 변경해주세요 */
+    background-image: url('./img/floor.jpeg'); /* 이미지 경로를 실제 이미지 파일의 경로로 변경해주세요 */
     background-repeat: repeat;
     transform: perspective(100px) rotateX(15deg) translateZ(10px);
     transform-origin: center bottom;
